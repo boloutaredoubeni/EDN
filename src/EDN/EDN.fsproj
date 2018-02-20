@@ -1,20 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard1.6;net461</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Title>EDN</Title>
-    <Description>EDN does the thing!</Description>
-    <!-- summary is not migrated from project.json, but you can use the <Description> property for that if needed. -->
-    <PackageTags>f#, fsharp</PackageTags>
-    <PackageProjectUrl>https://github.com/boloutaredoubeni/EDN</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/boloutaredoubeni/EDN/blob/master/LICENSE.md</PackageLicenseUrl>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <RepositoryType>git</RepositoryType>
-    <Authors>MyUsername</Authors>
-    <RepositoryUrl>https://github.com/boloutaredoubeni/EDN</RepositoryUrl>
-    <!-- owners is not supported in MSBuild -->
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <Optimize>true</Optimize>

@@ -6,6 +6,7 @@ nuget Argu 3.7
 nuget FSharp.Core 4.3.3
 nuget Expecto 5.1.2
 nuget SourceLink.Create.CommandLine 2.7.2 copy_local: true
+nuget FParsec
 
 group Build
     source https://www.nuget.org/api/v2
