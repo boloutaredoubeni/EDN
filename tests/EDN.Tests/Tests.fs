@@ -19,7 +19,7 @@ module ParserTests =
             Expect.equal expected result "nil can be parsed"
         }
 
-     let private testTrue =
+    let private testTrue =
         test "true" {
             let input = Token.True
             let (ParsedResultOk result) = Driver.runParser input
