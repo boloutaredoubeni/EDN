@@ -3,6 +3,7 @@ module Tests
 
 open Expecto
 open EDN
+open System.Numerics
 
 module ParserTests =
 
@@ -69,6 +70,30 @@ module ParserTests =
             Expect.equal expected result "character can't be parsed"
         }
 
+    let private testInteger =
+        let number = "-42"
+        test number {
+            let (ParsedResultOk result) = Driver.runParser number
+            let expected =  EDN.Types.Integer (BigInteger.Parse(number))
+            Expect.equal expected result "number can't be parsed"
+        }
+
+    let private testFloat =
+        let number = "3.1415"
+        test number {
+            let (ParsedResultOk result) = Driver.runParser number
+            let expected =  EDN.Types.Float (float number)
+            Expect.equal expected result "float can't be parsed"
+        }
+
+    let private testBadFloat =
+        let number = "1.23.45"
+        test number {
+            Expect.throws
+                (fun () -> Driver.runParser number |> fun (ParsedResultOk result) -> printfn "%A" result)
+                "shouldn't parse bad numbers"
+        }
+
 
     [<Tests>]
     let parseTests =
@@ -80,6 +105,9 @@ module ParserTests =
             testEscape
             testSpecialChar
             testAnyChar
+            testInteger
+            testFloat
+            testBadFloat
         ]
 
 [<Tests>]

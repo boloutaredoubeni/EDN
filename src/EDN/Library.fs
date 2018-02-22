@@ -1,5 +1,7 @@
 namespace EDN
 
+open System.Numerics
+
 module Types =
 
     type Symbol =
@@ -102,11 +104,34 @@ module private Parser =
             | Token.SpaceCharString -> Character ' '
             | Token.TabCharString -> Character '\t'
             | s -> Character s.[0]
+        let parseNumber =
+            let (|IntegerLiteral|_|) (numLiteral : NumberLiteral) =
+                if numLiteral.IsInteger
+                    then
+                        let parsed, bigInt = BigInteger.TryParse(numLiteral.String)
+                        if parsed
+                            then Some bigInt
+                            else None
+                    else None
+            let (|FloatLiteral|_|) (numLiteral : NumberLiteral) =
+                if numLiteral.IsDecimal
+                    then try (Some << float) numLiteral.String with _ -> None
+                    else None
+            let numberLiteralOptions =
+                NumberLiteralOptions.AllowMinusSign
+                ||| NumberLiteralOptions.AllowFraction
+                ||| NumberLiteralOptions.AllowExponent
+            numberLiteral numberLiteralOptions "number"
+            |>> function
+            // Like with any switch or if/else branching, the order is important
+            | IntegerLiteral i -> Integer i
+            | FloatLiteral f -> Float f
         choice [
             pNil
             parseBool
             parseString
             parseCharacter
+            parseNumber
         ]
 
 [<AutoOpen>]
